@@ -28,7 +28,7 @@ CLS
 
 ECHO ==========INSTALLING OFFICE==========
 @PING 127.0.0.1 -n 5 -w 1000 > NUL
-CALL Setup.exe /configure oitp_configure.xml
+CALL %CD%\Setup.exe /configure %CD%\oitp_configure.xml
 @PING 127.0.0.1 -n 5 -w 1000 > NUL
 goto complete
 
@@ -38,5 +38,5 @@ CLS
 ECHO ==========INSTALL COMPELTE===========
 ECHO -------------------------------------
 ECHO ========PRESS ANY KEY TO EXIT========
-PAUSE>NUL
-EXIT
+Pause>null
+Exit
