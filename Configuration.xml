@@ -1,14 +1,12 @@
 <Configuration>
-  <Add SourcePath="oitpinstall" OfficeClientEdition="32">
-    <Product ID="Standard2019Volume">
+  <Add SourcePath="oitpinstall\" OfficeClientEdition="32">
+    <Product ID="Standard2019Retail">
       <Language ID="zh-tw" />
       <ExcludeApp ID="Groove" />
       <ExcludeApp ID="OneNote" />
     </Product>
   </Add>
-  <Property Name="PinIconsToTaskbar" Value="TRUE" />
-  <Updates Enabled="TRUE" />
   <RemoveMSI All="TRUE" />
   <Display Level="None" AcceptEULA="FALSE" />
-  <Logging Level="Off" />
+  <Logging Level="off" /^>
 </Configuration>
