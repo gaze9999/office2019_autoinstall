@@ -1,40 +1,54 @@
 @echo off
-title Installing Office 2019
+title Call Office Install
 
+call :Resume
+goto %current%
+goto :eof
+
+:one
+::Add script to Run key
+reg add HKCU\Software\Microsoft\Windows\CurrentVersion\Run /v "%~n0" /d "%~dpnx0" /f
+echo two >%~dp0current.txt
+goto :eof
+
+:two
 IF EXIST %TEMP%\oitplog RMDIR /s /q %TEMP%\oitplog
 MKDIR %TEMP%\oitplog
 
-:install
-ECHO ^<Configuration^> > %CD%\oitp_configure.xml
-ECHO. >> %CD%\oitp_configure.xml
-ECHO   ^<Add SourcePath="%CD%\oitpinstall\" OfficeClientEdition="32" Channel="Monthly" ^> >> %CD%\oitp_configure.xml
-ECHO     ^<Product ID="Standard2019Retail"^> >> %CD%\oitp_configure.xml
-ECHO        ^<Language ID="zh-tw" /^> >> %CD%\oitp_configure.xml
-ECHO     ^</Product^> >> %CD%\oitp_configure.xml
-ECHO   ^</Add^> >> %CD%\oitp_configure.xml
-ECHO. >> %CD%\oitp_configure.xml
-ECHO     ^<Property Name="SharedComputerLicensing" Value="0" /^> >> %CD%\oitp_configure.xml
-ECHO     ^<Property Name="PinIconsToTaskbar" Value="TRUE" /^> >> %CD%\oitp_configure.xml
-ECHO     ^<Property Name="SCLCacheOverride" Value="0" /^> >> %CD%\oitp_configure.xml
-ECHO     ^<Updates Enabled="TRUE" Channel="Monthly" /^> >> %CD%\oitp_configure.xml
-ECHO     ^<RemoveMSI All="TRUE" /^> >> %CD%\oitp_configure.xml
-ECHO     ^<Display Level="None" AcceptEULA="FALSE" /^> >> %CD%\oitp_configure.xml
-ECHO     ^<Logging Name="OfficeSetup.txt" Path="%TEMP%\oitplog\" /^> >> %CD%\oitp_configure.xml
-ECHO. >> %CD%\oitp_configure.xml
-ECHO ^</Configuration^> >> %CD%\oitp_configure.xml
+ECHO ^<Configuration^> > %~dp0oitp_configure.xml
+ECHO. >> %~dp0oitp_configure.xml
+ECHO   ^<Add SourcePath="%~dp0oitpinstall\" OfficeClientEdition="32" Channel="Monthly" ^> >> %~dp0oitp_configure.xml
+ECHO     ^<Product ID="HomeStudentRetail"^> >> %~dp0oitp_configure.xml
+ECHO        ^<Language ID="zh-tw" /^> >> %~dp0oitp_configure.xml
+ECHO     ^</Product^> >> %~dp0oitp_configure.xml
+ECHO   ^</Add^> >> %~dp0oitp_configure.xml
+ECHO. >> %~dp0oitp_configure.xml
+ECHO     ^<Property Name="SharedComputerLicensing" Value="0" /^> >> %~dp0oitp_configure.xml
+ECHO     ^<Property Name="PinIconsToTaskbar" Value="TRUE" /^> >> %~dp0oitp_configure.xml
+ECHO     ^<Property Name="SCLCacheOverride" Value="0" /^> >> %~dp0oitp_configure.xml
+ECHO     ^<Updates Enabled="TRUE" Channel="Monthly" /^> >> %~dp0oitp_configure.xml
+ECHO     ^<RemoveMSI All="TRUE" /^> >> %~dp0oitp_configure.xml
+ECHO     ^<Display Level="None" AcceptEULA="FALSE" /^> >> %~dp0oitp_configure.xml
+ECHO     ^<Logging Name="OfficeSetup.txt" Path="%TEMP%\oitplog\" /^> >> %~dp0oitp_configure.xml
+ECHO. >> %~dp0oitp_configure.xml
+ECHO ^</Configuration^> >> %~dp0oitp_configure.xml
 CLS
 
 ECHO ==========INSTALLING OFFICE==========
-@PING 127.0.0.1 -n 5 -w 1000 > NUL
-CALL %CD%\Setup.exe /configure %CD%\oitp_configure.xml
-@PING 127.0.0.1 -n 5 -w 1000 > NUL
+CALL C:\office\Setup.exe /configure %~dp0oitp_configure.xml
 goto complete
 
 :complete
-del /F /S %CD%\oitp_configure.xml
-CLS
-ECHO ==========INSTALL COMPELTE===========
-ECHO -------------------------------------
-ECHO ========PRESS ANY KEY TO EXIT========
-Pause > NUL
-Exit
+del /F /S %~dp0oitp_configure.xml
+reg delete HKCU\Software\Microsoft\Windows\CurrentVersion\Run /v "%~n0" /f
+del %~dp0current.txt
+RD "C:\Office" /s /q
+shutdown -r -t 0
+goto :eof
+
+:resume
+if exist %~dp0current.txt (
+    set /p current=<%~dp0current.txt
+) else (
+    set current=one
+)
