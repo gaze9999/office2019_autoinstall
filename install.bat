@@ -17,7 +17,7 @@ MKDIR %TEMP%\oitplog
 
 ECHO ^<Configuration^> > %~dp0oitp_configure.xml
 ECHO. >> %~dp0oitp_configure.xml
-ECHO   ^<Add SourcePath="%~dp0oitpinstall\" OfficeClientEdition="32" Channel="Monthly" ^> >> %~dp0oitp_configure.xml
+ECHO   ^<Add SourcePath="%~dp0oitpinstall\" OfficeClientEdition="32" ^> >> %~dp0oitp_configure.xml
 ECHO     ^<Product ID="HomeStudentRetail"^> >> %~dp0oitp_configure.xml
 ECHO        ^<Language ID="zh-tw" /^> >> %~dp0oitp_configure.xml
 ECHO     ^</Product^> >> %~dp0oitp_configure.xml
