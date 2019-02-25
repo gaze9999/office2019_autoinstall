@@ -1,0 +1,7 @@
+# folders
+/dllog
+/oitpinstall
+
+# generatored files
+*.exe
+*.xml
